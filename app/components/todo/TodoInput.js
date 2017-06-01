@@ -1,6 +1,7 @@
 // 展示组件： todo组件中进行输入用的
 import React, { Component } from 'react'
 
+// props:addTodo
 export default class TodoInput extends Component{
 	constructor(props){
 		super(props);
@@ -11,14 +12,17 @@ export default class TodoInput extends Component{
 		this.state = { todoInput: '' } 
 		this.handleChange = handleChange.bind(this)
 	}
-
+	// handleChange函数是个工具类函数，应该放在util下。
+	handleChange(e){
+		this.setState({ todoInput:e.target.value.trim() })
+	}
 	handleSubmit(){
 		let content = this.this.state.todoInput.trim()
 		if(!content) return
 
 		// 展示组件只调用上层组件传递的addTodo函数进行操作。 
 		this.props.addTodo(content)
-		this.setState({})
+		this.setState({ todoInput: '' })
 	}
 	render(){
 		return (
@@ -36,7 +40,7 @@ export default class TodoInput extends Component{
 						placeholder="请输入待办事项，敲回车确认添加"
 						required 
 						value={this.state.todoInput}
-						onChange={}/>
+						onChange={this.handleChange}/>
 				</div>
 			</form>
 		)
